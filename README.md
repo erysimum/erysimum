@@ -49,14 +49,8 @@ Real-time soccer commentary app powered by AWS & Kubernetes
 - Full IaC with Terraform (VPC, EKS, ALB, IAM)  
 
 
----
 
-### 📊 GitHub Stats
 
-<p align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=erysimum&show_icons=true&theme=tokyonight&hide_border=true" />
-  <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=erysimum&layout=compact&theme=tokyonight&hide_border=true" />
-</p>
 
 ---
 
