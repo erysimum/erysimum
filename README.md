@@ -1,64 +1,67 @@
-<h1 align="center">Hey there, I'm Amit Shahi 👋</h1>
+# Hi, I'm Amit 👋
 
-<p align="center">
-  <b>Software Engineer · AWS & DevOps Enthusiast · Kubernetes · React · Terraform</b><br>
-  Building modern, secure, and scalable cloud-native applications
-</p>
+**DevOps & Cloud Engineer** based in Melbourne, Australia. I build and operate production-grade platforms on **AWS** and **Kubernetes** — turning fragile, manual deployments into reliable, reproducible pipelines.
 
----
+4+ years in software engineering, now focused on infrastructure as code, GitOps, and SRE-grade observability.
 
-### 🚀 About Me
--  Currently building **[Soccerize](https://github.com/erysimum/soccerize/tree/eks-deploy)** – a real-time, event-driven soccer app using EKS, API Gateway WebSockets, Lambda, DynamoDB, and SQS.
--  Love working with **CI/CD pipelines** (Jenkins, Argo CD, GitOps) and **DevSecOps** tools (Trivy, SonarQube, gitleaks).
-- Experienced with **AWS** (VPC, EKS, ALB, IRSA, Lambda, Redshift, Glue).
-- Passionate about clean code, automation, and production-grade deployments.
-- Goal: Build systems that **just work** and scale effortlessly.
+- 🔭 Currently building a full EKS platform with GitOps, SLO observability, and chaos engineering (see below)
+- 🌱 Working with Terraform, Argo CD, Istio, Prometheus, and Pyrra
+- 🛠️ Red Hat Certified System Administrator (RHCSA, RHEL 9)
+- 📫 Reach me on [LinkedIn](https://www.linkedin.com/in/amit10shahi)
 
 ---
 
-###  Tech Stack
+## 🚀 Featured Project — Production-Grade EKS Platform
 
-**Cloud & Infra:**  
-![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
-![Terraform](https://img.shields.io/badge/Terraform-623CE4?style=for-the-badge&logo=terraform&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+A complete, reproducible Kubernetes platform on AWS EKS, built and operated solo across **four repositories** that mirror real-world team boundaries. A 5-service polyglot retail app runs on top of it, instrumented end to end.
 
-**CI/CD & DevSecOps:**  
-![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
-![Argo CD](https://img.shields.io/badge/ArgoCD-FB8C00?style=for-the-badge&logo=argo&logoColor=white)
-![Trivy](https://img.shields.io/badge/Trivy-000000?style=for-the-badge&logo=trivy&logoColor=white)
-![SonarQube](https://img.shields.io/badge/SonarQube-4E9BCD?style=for-the-badge&logo=sonarqube&logoColor=white)
+**What it does:**
+- `terraform apply` brings up ~100 AWS resources in about 15 minutes, zero manual steps
+- GitOps via Argo CD ApplicationSet — the cluster always matches Git
+- Multi-tier SLOs with Pyrra (Google SRE multi-window burn-rate) and severity-tiered alerting to Slack + PagerDuty
+- Chaos engineering via Istio fault injection — no code changes, no restarts
+- Validated end to end with a real order traced across 5 services into PostgreSQL
 
-**Frontend & Backend:**  
-![React](https://img.shields.io/badge/React-61DBFB?style=for-the-badge&logo=react&logoColor=black)
-![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
-![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
+**The four repos:**
 
-
----
-
-### 📌 Featured Project
-
-#### ⚽ [Soccerize](https://github.com/erysimum/soccerize/tree/eks-deploy)
-Real-time soccer commentary app powered by AWS & Kubernetes  
-- EKS cluster with IRSA for secure AWS access  
-- Event-driven architecture using SQS, Lambda, DynamoDB, WebSockets  
-- CI/CD with Jenkins + GitOps with Argo CD  
-- React frontend with NGINX reverse proxy  
-- Full IaC with Terraform (VPC, EKS, ALB, IAM)  
-
-
-
-
+| Repo | What it owns |
+|------|-------------|
+| 🏗️ [retail-store-infra](https://github.com/erysimum/retail-store-infra) | Terraform: VPC, EKS, RDS, ECR, IAM, observability stack — **start here** |
+| 🔐 [retail-store-platform](https://github.com/erysimum/retail-store-platform) | Cluster policies: namespaces, RBAC, NetworkPolicy, quotas (Kustomize) |
+| 🔄 [retail-store-gitops](https://github.com/erysimum/retail-store-gitops) | Helm charts, Argo CD config, SLOs, dashboards, fault injection |
+| 🛍️ [retail-store-app](https://github.com/erysimum/retail-store-app) | The polyglot microservices application |
 
 ---
 
-### 🌍 Connect with Me
-<p>
-  <a href="https://www.linkedin.com/in/amit10shahi/"><img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin"></a>
-  <a href="mailto:amit10shahi@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white"></a>
-</p>
+## 🧰 Tech I work with
+
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazonwebservices&logoColor=FF9900)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat&logo=kubernetes&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=flat&logo=terraform&logoColor=white)
+![Argo CD](https://img.shields.io/badge/Argo%20CD-EF7B4D?style=flat&logo=argo&logoColor=white)
+![Istio](https://img.shields.io/badge/Istio-466BB0?style=flat&logo=istio&logoColor=white)
+![Helm](https://img.shields.io/badge/Helm-0F1689?style=flat&logo=helm&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=flat&logo=prometheus&logoColor=white)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?style=flat&logo=grafana&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=githubactions&logoColor=white)
+![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=flat&logo=jenkins&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![Bash](https://img.shields.io/badge/Bash-4EAA25?style=flat&logo=gnubash&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
+
+**Cloud (AWS):** EKS · VPC · IAM · RDS · Lambda · API Gateway · SQS · CloudWatch
+**Platform:** Kubernetes · Docker · Helm · Istio · NGINX
+**GitOps & CI/CD:** Argo CD · GitHub Actions (OIDC) · Jenkins · GitLab CI · SonarQube · Trivy
+**IaC:** Terraform · CloudFormation
+**Observability:** Prometheus · Grafana · Pyrra · Alertmanager · PagerDuty
 
 ---
-⭐️ From [erysimum](https://github.com/erysimum)
+
+## 📊 Other projects
+
+**Soccerize** — a real-time, event-driven soccer app on AWS EKS with Lambda, DynamoDB Streams, and API Gateway WebSockets. CI/CD with Jenkins, Trivy, and SonarQube cut deploy time from ~1 hour to ~8 minutes, with GitOps promotion via Argo CD.
+
+---
+
+<sub>📍 Melbourne, VIC · 🎓 Master of Applied IT, Victoria University · 🏅 RHCSA (RHEL 9)</sub>
