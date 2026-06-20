@@ -1,35 +1,53 @@
 # Hi, I'm Amit 👋
 
-**DevOps & Cloud Engineer** based in Melbourne, Australia. I build and operate production-grade platforms on **AWS** and **Kubernetes** — turning fragile, manual deployments into reliable, reproducible pipelines.
+I'm a DevOps and Cloud Engineer in Melbourne. Most of my work is on AWS and Kubernetes. I like taking the kind of deployment that's held together by manual steps and tribal knowledge and making it boring and repeatable instead.
 
-4+ years in software engineering, now focused on infrastructure as code, GitOps, and SRE-grade observability.
+I've been in software for about 4 years. Lately I'm spending most of my time on infrastructure as code, GitOps, and getting observability to actually tell you something useful.
 
-- 🔭 Currently building a full EKS platform with GitOps, SLO observability, and chaos engineering (see below)
-- 🌱 Working with Terraform, Argo CD, Istio, Prometheus, and Pyrra
-- 🛠️ Red Hat Certified System Administrator (RHCSA, RHEL 9)
-- 📫 Reach me on [LinkedIn](https://www.linkedin.com/in/amit10shahi)
+- 🔭 Right now I'm building out a full EKS platform: GitOps, SLO-based alerting, some chaos engineering, and an AI agent that helps with on-call. More on that below.
+- 🌱 Day to day I'm in Terraform, Argo CD, Istio, Prometheus and Pyrra
+- 🛠️ RHCSA certified (RHEL 9)
+- 📫 Say hi on [LinkedIn](https://www.linkedin.com/in/amit10shahi)
 
 ---
 
-## 🚀 Featured Project — Production-Grade EKS Platform
+## 🚀 AI SRE Agent (`retail-store-ai`)
 
-A complete, reproducible Kubernetes platform on AWS EKS, built and operated solo across **four repositories** that mirror real-world team boundaries. A 5-service polyglot retail app runs on top of it, instrumented end to end.
+This is the one I'm most into right now. It's an AI agent that helps with on-call for the EKS platform further down. When an alert fires, it goes and looks at the live cluster, figures out what's probably going on, and writes it up in Slack. It never changes anything itself. It just tells you what it found and what it would run, and you make the call.
 
-**What it does:**
-- `terraform apply` brings up ~100 AWS resources in about 15 minutes, zero manual steps
-- GitOps via Argo CD ApplicationSet — the cluster always matches Git
-- Multi-tier SLOs with Pyrra (Google SRE multi-window burn-rate) and severity-tiered alerting to Slack + PagerDuty
-- Chaos engineering via Istio fault injection — no code changes, no restarts
-- Validated end to end with a real order traced across 5 services into PostgreSQL
+A few parts I'm happy with:
 
-**The four repos:**
+- When an alert comes in, a small FastAPI service kicks off two investigators at the same time. Each one is its own `claude -p` process that's only allowed to touch one thing: one talks to Prometheus, one talks to Kubernetes, and there's a quick git-log check alongside them. They're genuinely separate processes running in parallel, not async pretending to be parallel.
+- After they finish, a final step with no tools pulls everything together into clean JSON (I validate it with Pydantic) and turns it into a Slack card: what broke, who's affected, the evidence, and commands you can copy and paste.
+- It's deliberately locked down. Every investigator only gets the single tool it needs, there are timeouts on each one, repeat alerts get filtered out, and the Slack post is guarded so it can't spam.
+
+I also tried to be honest about where it's weak. On EKS it correctly said "I don't have data on that" instead of inventing numbers, and it caught a stale alert on a system that had already recovered. But it also once pinned the blame on a random pod restart instead of the fault I'd actually injected, because it has no way of knowing a human caused it. That's the whole reason it stays advisory and keeps a person in the loop.
+
+🔗 [github.com/erysimum/retail-store-ai](https://github.com/erysimum/retail-store-ai)
+
+---
+
+## 🏗️ The platform it runs on — EKS
+
+A full Kubernetes platform on AWS EKS that I built and run on my own. I split it across five repos on purpose, roughly the way separate teams would own separate pieces at an actual company. A 5-service retail app runs on top, wired up so I can follow a request the whole way through.
+
+What it does:
+
+- One `terraform apply` brings up around 100 AWS resources in about 15 minutes. No clicking around in the console.
+- Argo CD keeps the cluster matching Git, so whatever's running is whatever's committed.
+- SLOs are done the proper way with Pyrra (multi-window burn rate, the Google SRE approach), and alerts go to Slack or PagerDuty depending on how bad it is.
+- I can break things on purpose with Istio fault injection, no code changes and no restarts.
+- I checked it actually works by pushing a real order through all 5 services and watching it land in Postgres.
+
+The five repos:
 
 | Repo | What it owns |
 |------|-------------|
-| 🏗️ [retail-store-infra](https://github.com/erysimum/retail-store-infra) | Terraform: VPC, EKS, RDS, ECR, IAM, observability stack — **start here** |
+| 🏗️ [retail-store-infra](https://github.com/erysimum/retail-store-infra) | Terraform: VPC, EKS, RDS, ECR, IAM, observability stack. Start here. |
 | 🔐 [retail-store-platform](https://github.com/erysimum/retail-store-platform) | Cluster policies: namespaces, RBAC, NetworkPolicy, quotas (Kustomize) |
 | 🔄 [retail-store-gitops](https://github.com/erysimum/retail-store-gitops) | Helm charts, Argo CD config, SLOs, dashboards, fault injection |
-| 🛍️ [retail-store-app](https://github.com/erysimum/retail-store-app) | The polyglot microservices application |
+| 🛍️ [retail-store-app](https://github.com/erysimum/retail-store-app) | The polyglot microservices app |
+| 🤖 [retail-store-ai](https://github.com/erysimum/retail-store-ai) | The AI SRE agent from above |
 
 ---
 
@@ -47,6 +65,9 @@ A complete, reproducible Kubernetes platform on AWS EKS, built and operated solo
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=githubactions&logoColor=white)
 ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=flat&logo=jenkins&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
+![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=flat&logo=pydantic&logoColor=white)
+![Claude Code](https://img.shields.io/badge/Claude%20Code-D97757?style=flat&logo=anthropic&logoColor=white)
 ![Bash](https://img.shields.io/badge/Bash-4EAA25?style=flat&logo=gnubash&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
 
@@ -55,12 +76,13 @@ A complete, reproducible Kubernetes platform on AWS EKS, built and operated solo
 **GitOps & CI/CD:** Argo CD · GitHub Actions (OIDC) · Jenkins · GitLab CI · SonarQube · Trivy
 **IaC:** Terraform · CloudFormation
 **Observability:** Prometheus · Grafana · Pyrra · Alertmanager · PagerDuty
+**AI / Agents:** Claude Code (MCP) · FastAPI · Pydantic · asyncio
 
 ---
 
 ## 📊 Other projects
 
-**Soccerize** — a real-time, event-driven soccer app on AWS EKS with Lambda, DynamoDB Streams, and API Gateway WebSockets. CI/CD with Jenkins, Trivy, and SonarQube cut deploy time from ~1 hour to ~8 minutes, with GitOps promotion via Argo CD.
+**Soccerize** is a real-time soccer app on AWS EKS, built around Lambda, DynamoDB Streams and API Gateway WebSockets. The fun part was the pipeline: with Jenkins, Trivy and SonarQube I got deploys down from about an hour to roughly 8 minutes, with Argo CD handling promotion.
 
 ---
 
