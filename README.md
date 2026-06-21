@@ -2,7 +2,7 @@
 
 I'm a DevOps and Cloud Engineer in Melbourne, mostly working with AWS and Kubernetes. A lot of what I do is taking deployments that only work because someone remembers the right steps, and turning them into something boring and repeatable.
 
-I've been in software about 4 years. These days it's mostly infrastructure as code, GitOps, and trying to make observability actually useful instead of just noisy.
+I've been in software about over 5 years. These days it's mostly infrastructure as code, GitOps, and trying to make observability actually useful instead of just noisy.
 
 - 🔭 Building a full EKS platform right now: GitOps, SLO alerting, some chaos testing, and an AI agent for on-call. More below.
 - 🌱 Day to day: Terraform, Argo CD, Istio, Prometheus, Pyrra
@@ -13,7 +13,7 @@ I've been in software about 4 years. These days it's mostly infrastructure as co
 
 ## 🚀 AI SRE Agent (`retail-store-ai`)
 
-This is my favourite thing I've built lately. It helps with on-call for the EKS platform below. When an alert fires, it goes and looks at the cluster, works out what's probably wrong, and writes it up in Slack. It never changes anything itself. It tells you what it found and what it'd run, and you decide.
+This is what I've built lately. It helps with on-call for the EKS platform below. When an alert fires, it goes and looks at the cluster, works out what's probably wrong, and writes it up in Slack. It never changes anything itself. It tells you what it found and what it'd run, and you decide.
 
 A few bits I'm happy with:
 
@@ -40,8 +40,6 @@ What it does:
 - SLOs done properly with Pyrra (multi-window burn rate, the Google SRE way), with alerts to Slack or PagerDuty depending on severity.
 - I can break things on purpose with Istio fault injection. No code changes, no restarts.
 - I checked it really works by putting a real order through all 5 services and watching it land in Postgres.
-
-Honestly, the first run took me about 4 hours with a pile of manual fixes. I folded every one of those back into Terraform, so now it's one command and ~15 minutes.
 
 📸 Rather see it than read about it? The [walkthrough](https://github.com/erysimum/retail-store-gitops/tree/main/docs/walkthrough) goes through the whole thing in screenshots: first traffic and SLOs, a Locust load test, tracing a failure down to one broken request, fault injection, and the AI agent's diagnosis at the end.
 
