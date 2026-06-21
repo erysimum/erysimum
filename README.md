@@ -1,4 +1,4 @@
-# Hi, I'm Amit 👋
+# Hi, I'm Amit 
 
 I'm a DevOps and Cloud Engineer in Melbourne, mostly working with AWS and Kubernetes. A lot of what I do is taking deployments that only work because someone remembers the right steps, and turning them into something boring and repeatable.
 
