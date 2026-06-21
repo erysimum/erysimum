@@ -4,14 +4,14 @@ I'm a DevOps and Cloud Engineer in Melbourne, mostly working with AWS and Kubern
 
 I've been in software about over 5 years. These days it's mostly infrastructure as code, GitOps, and trying to make observability actually useful instead of just noisy.
 
-- 🔭 Building a full EKS platform right now: GitOps, SLO alerting, some chaos testing, and an AI agent for on-call. More below.
-- 🌱 Day to day: Terraform, Argo CD, Istio, Prometheus, Pyrra
-- 🛠️ RHCSA certified (RHEL 9)
-- 📫 Say hi on [LinkedIn](https://www.linkedin.com/in/amit10shahi)
+-  Building a full EKS platform right now: GitOps, SLO alerting, some chaos testing, and an AI agent for on-call. More below.
+-  Day to day: Terraform, Argo CD, Istio, Prometheus, Pyrra
+-  RHCSA certified (RHEL 9)
+-  Say hi on [LinkedIn](https://www.linkedin.com/in/amit10shahi)
 
 ---
 
-## 🚀 AI SRE Agent (`retail-store-ai`)
+##  AI SRE Agent (`retail-store-ai`)
 
 This is what I've built lately. It helps with on-call for the EKS platform below. When an alert fires, it goes and looks at the cluster, works out what's probably wrong, and writes it up in Slack. It never changes anything itself. It tells you what it found and what it'd run, and you decide.
 
@@ -29,7 +29,7 @@ Want to see it run? Chapter 5 of the [walkthrough](https://github.com/erysimum/r
 
 ---
 
-## 🏗️ The platform it runs on — EKS
+## The platform it runs on — EKS
 
 A full Kubernetes platform on AWS EKS that I built and run solo. I split it across five repos on purpose, the way different teams would own different pieces at a real company. A 5-service retail app runs on top, wired up so I can follow a single request all the way through.
 
@@ -41,21 +41,21 @@ What it does:
 - I can break things on purpose with Istio fault injection. No code changes, no restarts.
 - I checked it really works by putting a real order through all 5 services and watching it land in Postgres.
 
-📸 Rather see it than read about it? The [walkthrough](https://github.com/erysimum/retail-store-gitops/tree/main/docs/walkthrough) goes through the whole thing in screenshots: first traffic and SLOs, a Locust load test, tracing a failure down to one broken request, fault injection, and the AI agent's diagnosis at the end.
+ Rather see it than read about it? The [walkthrough](https://github.com/erysimum/retail-store-gitops/tree/main/docs/walkthrough) goes through the whole thing in screenshots: first traffic and SLOs, a Locust load test, tracing a failure down to one broken request, fault injection, and the AI agent's diagnosis at the end.
 
 The five repos:
 
 | Repo | What it owns |
 |------|-------------|
-| 🏗️ [retail-store-infra](https://github.com/erysimum/retail-store-infra) | Terraform: VPC, EKS, RDS, ECR, IAM, observability stack. Start here. |
-| 🔐 [retail-store-platform](https://github.com/erysimum/retail-store-platform) | Cluster policies: namespaces, RBAC, NetworkPolicy, quotas (Kustomize) |
-| 🔄 [retail-store-gitops](https://github.com/erysimum/retail-store-gitops) | Helm charts, Argo CD config, SLOs, dashboards, fault injection |
-| 🛍️ [retail-store-app](https://github.com/erysimum/retail-store-app) | The polyglot microservices app |
-| 🤖 [retail-store-ai](https://github.com/erysimum/retail-store-ai) | The AI SRE agent from above |
+|  [retail-store-infra](https://github.com/erysimum/retail-store-infra) | Terraform: VPC, EKS, RDS, ECR, IAM, observability stack. Start here. |
+|  [retail-store-platform](https://github.com/erysimum/retail-store-platform) | Cluster policies: namespaces, RBAC, NetworkPolicy, quotas (Kustomize) |
+|  [retail-store-gitops](https://github.com/erysimum/retail-store-gitops) | Helm charts, Argo CD config, SLOs, dashboards, fault injection |
+|  [retail-store-app](https://github.com/erysimum/retail-store-app) | The polyglot microservices app |
+|  [retail-store-ai](https://github.com/erysimum/retail-store-ai) | The AI SRE agent from above |
 
 ---
 
-## 🧰 Tech I work with
+##  Tech I work with
 
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazonwebservices&logoColor=FF9900)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat&logo=kubernetes&logoColor=white)
