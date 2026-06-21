@@ -2,7 +2,7 @@
 
 I'm a DevOps and Cloud Engineer in Melbourne, mostly working with AWS and Kubernetes. A lot of what I do is taking deployments that only work because someone remembers the right steps, and turning them into something boring and repeatable.
 
-I've been in software about over 5 years. These days it's mostly infrastructure as code, GitOps, and trying to make observability actually useful instead of just noisy.
+I've been in software about over 4 years. These days it's mostly infrastructure as code, GitOps, and trying to make observability actually useful instead of just noisy.
 
 -  Building a full EKS platform right now: GitOps, SLO alerting, some chaos testing, and an AI agent for on-call. More below.
 -  Day to day: Terraform, Argo CD, Istio, Prometheus, Pyrra
