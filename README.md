@@ -23,6 +23,8 @@ A few parts I'm happy with:
 
 I also tried to be honest about where it's weak. On EKS it correctly said "I don't have data on that" instead of inventing numbers, and it caught a stale alert on a system that had already recovered. But it also once pinned the blame on a random pod restart instead of the fault I'd actually injected, because it has no way of knowing a human caused it. That's the whole reason it stays advisory and keeps a person in the loop.
 
+If you'd rather see it than read about it, chapter 5 of the [platform walkthrough](https://github.com/erysimum/retail-store-gitops/tree/main/docs/walkthrough/05-ai-agent) has screenshots of a real run: the subagents firing off in parallel, then the Slack card with the root cause, the evidence, and the commands to fix it.
+
 🔗 [github.com/erysimum/retail-store-ai](https://github.com/erysimum/retail-store-ai)
 
 ---
@@ -38,6 +40,8 @@ What it does:
 - SLOs are done the proper way with Pyrra (multi-window burn rate, the Google SRE approach), and alerts go to Slack or PagerDuty depending on how bad it is.
 - I can break things on purpose with Istio fault injection, no code changes and no restarts.
 - I checked it actually works by pushing a real order through all 5 services and watching it land in Postgres.
+
+📸 If you'd rather see it than read about it, the [platform walkthrough](https://github.com/erysimum/retail-store-gitops/tree/main/docs/walkthrough) goes through the whole thing with screenshots: first traffic and SLOs, a Locust load test, tracing a failure to one broken request, Istio fault injection, and the AI agent's diagnosis at the end.
 
 The five repos:
 
