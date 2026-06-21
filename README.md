@@ -1,11 +1,11 @@
 # Hi, I'm Amit 👋
 
-I'm a DevOps and Cloud Engineer in Melbourne. Most of my work is on AWS and Kubernetes. I like taking the kind of deployment that's held together by manual steps and tribal knowledge and making it boring and repeatable instead.
+I'm a DevOps and Cloud Engineer in Melbourne, mostly working with AWS and Kubernetes. A lot of what I do is taking deployments that only work because someone remembers the right steps, and turning them into something boring and repeatable.
 
-I've been in software for about 4 years. Lately I'm spending most of my time on infrastructure as code, GitOps, and getting observability to actually tell you something useful.
+I've been in software about 4 years. These days it's mostly infrastructure as code, GitOps, and trying to make observability actually useful instead of just noisy.
 
-- 🔭 Right now I'm building out a full EKS platform: GitOps, SLO-based alerting, some chaos engineering, and an AI agent that helps with on-call. More on that below.
-- 🌱 Day to day I'm in Terraform, Argo CD, Istio, Prometheus and Pyrra
+- 🔭 Building a full EKS platform right now: GitOps, SLO alerting, some chaos testing, and an AI agent for on-call. More below.
+- 🌱 Day to day: Terraform, Argo CD, Istio, Prometheus, Pyrra
 - 🛠️ RHCSA certified (RHEL 9)
 - 📫 Say hi on [LinkedIn](https://www.linkedin.com/in/amit10shahi)
 
@@ -13,17 +13,17 @@ I've been in software for about 4 years. Lately I'm spending most of my time on 
 
 ## 🚀 AI SRE Agent (`retail-store-ai`)
 
-This is the one I'm most into right now. It's an AI agent that helps with on-call for the EKS platform further down. When an alert fires, it goes and looks at the live cluster, figures out what's probably going on, and writes it up in Slack. It never changes anything itself. It just tells you what it found and what it would run, and you make the call.
+This is my favourite thing I've built lately. It helps with on-call for the EKS platform below. When an alert fires, it goes and looks at the cluster, works out what's probably wrong, and writes it up in Slack. It never changes anything itself. It tells you what it found and what it'd run, and you decide.
 
-A few parts I'm happy with:
+A few bits I'm happy with:
 
-- When an alert comes in, a small FastAPI service kicks off two investigators at the same time. Each one is its own `claude -p` process that's only allowed to touch one thing: one talks to Prometheus, one talks to Kubernetes, and there's a quick git-log check alongside them. They're genuinely separate processes running in parallel, not async pretending to be parallel.
-- After they finish, a final step with no tools pulls everything together into clean JSON (I validate it with Pydantic) and turns it into a Slack card: what broke, who's affected, the evidence, and commands you can copy and paste.
-- It's deliberately locked down. Every investigator only gets the single tool it needs, there are timeouts on each one, repeat alerts get filtered out, and the Slack post is guarded so it can't spam.
+- When an alert lands, a small FastAPI service starts two investigators at once. Each one is its own `claude -p` process allowed to touch exactly one thing: one reads Prometheus, one reads Kubernetes, with a quick git-log check on the side. They're real separate processes, not async pretending to be parallel.
+- Once they're done, a final step with no tools pulls it all into clean JSON (validated with Pydantic) and posts a Slack card: what broke, who's hit, the evidence, and commands you can paste.
+- It's locked down on purpose. Each investigator gets only the one tool it needs, everything has a timeout, repeat alerts get dropped, and the Slack post is guarded.
 
-I also tried to be honest about where it's weak. On EKS it correctly said "I don't have data on that" instead of inventing numbers, and it caught a stale alert on a system that had already recovered. But it also once pinned the blame on a random pod restart instead of the fault I'd actually injected, because it has no way of knowing a human caused it. That's the whole reason it stays advisory and keeps a person in the loop.
+I tried to be honest about where it slips, too. It correctly says "no data on that" instead of inventing numbers, and it caught a stale alert on a system that had already recovered. But once it blamed a random pod restart instead of the fault I'd actually injected, because it had no way of knowing a human caused it. That's exactly why it only ever advises and keeps a person in the loop.
 
-If you'd rather see it than read about it, chapter 5 of the [platform walkthrough](https://github.com/erysimum/retail-store-gitops/tree/main/docs/walkthrough/05-ai-agent) has screenshots of a real run: the subagents firing off in parallel, then the Slack card with the root cause, the evidence, and the commands to fix it.
+Want to see it run? Chapter 5 of the [walkthrough](https://github.com/erysimum/retail-store-gitops/tree/main/docs/walkthrough/05-ai-agent) has screenshots of the whole thing: the subagents kicking off, then the Slack card with root cause, evidence, and the fix.
 
 🔗 [github.com/erysimum/retail-store-ai](https://github.com/erysimum/retail-store-ai)
 
@@ -31,17 +31,19 @@ If you'd rather see it than read about it, chapter 5 of the [platform walkthroug
 
 ## 🏗️ The platform it runs on — EKS
 
-A full Kubernetes platform on AWS EKS that I built and run on my own. I split it across five repos on purpose, roughly the way separate teams would own separate pieces at an actual company. A 5-service retail app runs on top, wired up so I can follow a request the whole way through.
+A full Kubernetes platform on AWS EKS that I built and run solo. I split it across five repos on purpose, the way different teams would own different pieces at a real company. A 5-service retail app runs on top, wired up so I can follow a single request all the way through.
 
 What it does:
 
-- One `terraform apply` brings up around 100 AWS resources in about 15 minutes. No clicking around in the console.
-- Argo CD keeps the cluster matching Git, so whatever's running is whatever's committed.
-- SLOs are done the proper way with Pyrra (multi-window burn rate, the Google SRE approach), and alerts go to Slack or PagerDuty depending on how bad it is.
-- I can break things on purpose with Istio fault injection, no code changes and no restarts.
-- I checked it actually works by pushing a real order through all 5 services and watching it land in Postgres.
+- One `terraform apply` brings up around 100 AWS resources in about 15 minutes. No clicking around the console.
+- Argo CD keeps the cluster in step with Git, so what's running is always what's committed.
+- SLOs done properly with Pyrra (multi-window burn rate, the Google SRE way), with alerts to Slack or PagerDuty depending on severity.
+- I can break things on purpose with Istio fault injection. No code changes, no restarts.
+- I checked it really works by putting a real order through all 5 services and watching it land in Postgres.
 
-📸 If you'd rather see it than read about it, the [platform walkthrough](https://github.com/erysimum/retail-store-gitops/tree/main/docs/walkthrough) goes through the whole thing with screenshots: first traffic and SLOs, a Locust load test, tracing a failure to one broken request, Istio fault injection, and the AI agent's diagnosis at the end.
+Honestly, the first run took me about 4 hours with a pile of manual fixes. I folded every one of those back into Terraform, so now it's one command and ~15 minutes.
+
+📸 Rather see it than read about it? The [walkthrough](https://github.com/erysimum/retail-store-gitops/tree/main/docs/walkthrough) goes through the whole thing in screenshots: first traffic and SLOs, a Locust load test, tracing a failure down to one broken request, fault injection, and the AI agent's diagnosis at the end.
 
 The five repos:
 
