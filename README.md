@@ -1,6 +1,6 @@
 # Hi, I'm Amit 
 
-I'm a DevOps and Cloud Engineer in Melbourne, mostly working with AWS and Kubernetes. A lot of what I do is taking deployments that only work because someone remembers the right steps, and turning them into something boring and repeatable.
+I'm a full-stack software developer, DevOps and Cloud Engineer in Melbourne, mostly working with AWS and Kubernetes. A lot of what I do is taking deployments that only work because someone remembers the right steps, and turning them into something boring and repeatable.
 
 I've been in software about over 6+ years. These days it's mostly infrastructure as code, GitOps, and trying to make observability actually useful instead of just noisy.
 
